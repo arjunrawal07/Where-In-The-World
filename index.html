@@ -24,11 +24,22 @@
           center: [-118.805, 34.027], //longitude, latitude
           zoom: 13,
         });
-        var basemapToggle = new BasemapToggle({
+        // var basemapToggle = new BasemapToggle({
+        //   view: view,
+        //   nextBasemap: "satellite",
+        // });
+        //Adds basemapToggle widget into bottom-right corner
+        // view.ui.add(basemapToggle, "bottom-right");
+        var basemapGallery = new BasemapGallery({
           view: view,
-          nextBasemap: "satellite",
+          source: {
+            portal: {
+              url: "https://www.arcgis.com",
+              useVectorBasemaps: false, // loads raster tile basemaps
+            },
+          },
         });
-        view.ui.add(basemapToggle, "bottom-right");
+        view.ui.add(basemapGallery, "top-right");
       });
     </script>
     <meta charset="UTF-8" />
