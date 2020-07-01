@@ -72,29 +72,61 @@ require([
   //Layer used to draw graphics returned
   var graphicsLayer = new GraphicsLayer();
   map.add(graphicsLayer);
-});
 
-//USed to accept the return values from a query and add the results to graphics layer
-function addGraphics(result) {
-  graphicsLayer.removeAll(); //Clears the graphics layer each time
-  result.features.forEach(function (feature) {
-    var g = new Graphic({
-      geometry: feature.geometry,
-      attributes: feature.attributes,
-      symbol: {
-        type: "simple-marker", //Creates a black symbol with cyan outline
-        color: [0, 0, 0],
-        outline: {
-          width: 2,
-          color: [0, 255, 255],
+  //Function is used to accept the return values from a query and add the results to graphics layer
+  function addGraphics(result) {
+    graphicsLayer.removeAll(); //Clears the graphics layer each time
+    result.features.forEach(function (feature) {
+      var g = new Graphic({
+        geometry: feature.geometry,
+        attributes: feature.attributes,
+        symbol: {
+          type: "simple-marker", //Creates a black symbol with cyan outline
+          color: [0, 0, 0],
+          outline: {
+            width: 2,
+            color: [0, 255, 255],
+          },
+          size: "20px",
         },
-        size: "20px",
-      },
-      popupTemplate: { //Shows some trail info when clicked
-        title: "{TRL_NAME}",
-        content: "This is a {PARK_NAME} trail located in {CITY_JUR}",
-      },
+        //Shows some trail info when clicked
+        popupTemplate: {
+          title: "{TRL_NAME}",
+          content: "This is a {PARK_NAME} trail located in {CITY_JUR}",
+        },
+      });
+      graphicsLayer.add(g);
     });
-    graphicsLayer.add(g);
+  }
+
+  //Function builds a query that will return all the listed fields and geometry from feature layer
+  function queryFeatureLayer(
+    point,
+    distance,
+    spatialRelationship,
+    sqlExpression
+  ) {
+    var query = {
+      geometry: point,
+      distance: distance,
+      spatialRelationship: spatialRelationship,
+      outFields: ["*"],
+      returnGeometry: true,
+      where: sqlExpression,
+    };
+    //queryFeatures method executes the query
+    //When features are returned, results are passed into the addGraphics function defined above.
+    featureLayer.queryFeatures(query).then(function (result) {
+      addGraphics(result, true);
+    });
+  }
+  //Searches for and displays features in the center of map
+  view.when(function () {
+    queryFeatureLayer(view.center, 1500, "intersects");
   });
-}
+  //Calls the queryFeatureLayer function and searches for features when clicked
+  //Searches for and displays only the features that are 1500 meters from the point
+  view.on("click", function (event) {
+    queryFeatureLayer(event.mapPoint, 1500, "intersects");
+  });
+});
