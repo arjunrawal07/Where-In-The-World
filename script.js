@@ -4,7 +4,17 @@ require([
   "esri/widgets/BasemapToggle",
   "esri/widgets/BasemapGallery",
   "esri/layers/FeatureLayer",
-], function (Map, MapView, BasemapToggle, BasemapGallery, FeatureLayer) {
+  "esri/layers/GraphicsLayer",
+  "esri/Graphic",
+], function (
+  Map,
+  MapView,
+  BasemapToggle,
+  BasemapGallery,
+  FeatureLayer,
+  GraphicsLayer,
+  Graphic
+) {
   //Map is the container for layers
   var map = new Map({
     basemap: "streets-navigation-vector",
@@ -52,4 +62,39 @@ require([
       "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0",
   });
   map.add(parksLayer, 0);
+
+  //Referencing the trailheads feature layer to query
+  var featureLayer = new FeatureLayer({
+    url:
+      "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads_Styled/FeatureServer/0",
+  });
+
+  //Layer used to draw graphics returned
+  var graphicsLayer = new GraphicsLayer();
+  map.add(graphicsLayer);
 });
+
+//USed to accept the return values from a query and add the results to graphics layer
+function addGraphics(result) {
+  graphicsLayer.removeAll(); //Clears the graphics layer each time
+  result.features.forEach(function (feature) {
+    var g = new Graphic({
+      geometry: feature.geometry,
+      attributes: feature.attributes,
+      symbol: {
+        type: "simple-marker", //Creates a black symbol with cyan outline
+        color: [0, 0, 0],
+        outline: {
+          width: 2,
+          color: [0, 255, 255],
+        },
+        size: "20px",
+      },
+      popupTemplate: { //Shows some trail info when clicked
+        title: "{TRL_NAME}",
+        content: "This is a {PARK_NAME} trail located in {CITY_JUR}",
+      },
+    });
+    graphicsLayer.add(g);
+  });
+}
