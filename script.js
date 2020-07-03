@@ -89,6 +89,7 @@ require([
           },
           size: "20px",
         },
+
         //Shows some trail info when clicked
         popupTemplate: {
           title: "{TRL_NAME}",
@@ -114,6 +115,7 @@ require([
       returnGeometry: true,
       where: sqlExpression,
     };
+
     //queryFeatures method executes the query
     //When features are returned, results are passed into the addGraphics function defined above.
     featureLayer.queryFeatures(query).then(function (result) {
@@ -124,9 +126,58 @@ require([
   view.when(function () {
     queryFeatureLayer(view.center, 1500, "intersects");
   });
+
   //Calls the queryFeatureLayer function and searches for features when clicked
   //Searches for and displays only the features that are 1500 meters from the point
   view.on("click", function (event) {
     queryFeatureLayer(event.mapPoint, 1500, "intersects");
+  });
+
+  function queryFeatureLayerView(
+    point,
+    distance,
+    spatialRelationship,
+    sqlExpression
+  ) {
+    //If layer is missing, add it
+    if (!map.findLayerById(featureLayer.id)) {
+      featureLayer.outFields = ["*"];
+      map.add(featureLayer, 0);
+    }
+    //Build the query
+    var query = {
+      geometry: point,
+      distance: distance,
+      spatialRelationship: spatialRelationship,
+      outFields: ["*"],
+      returnGeometry: true,
+      where: sqlExpression,
+    };
+    //When layerview is ready, then call the query features
+    view.whenLayerView(featureLayer).then(function (featureLayerView) {
+      if (featureLayerView.updating) {
+        var handle = featureLayerView.watch("updating", function (isUpdating) {
+          if (!isUpdating) {
+            //implement the query
+            featureLayerView.queryFeatures(query).then(function (result) {
+              addGraphics(result);
+            });
+            handle.remove();
+          }
+        });
+      } else {
+        //Implement query
+        featureLayerView.queryFeatures(query).then(function (result) {
+          addGraphics(result);
+        });
+      }
+    });
+  }
+  view.when(function () {
+    queryFeatureLayerView(view.center, 1500, "intersects");
+  });
+
+  view.on("click", function (event) {
+    queryFeatureLayerView(event.mapPoint, 1500, "intersects");
   });
 });
