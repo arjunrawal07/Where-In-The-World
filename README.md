@@ -11,7 +11,7 @@ Esri provides very short, easy-to-follow tutorials to build applications with th
 * JavaScript
 
 # Developer's Note:
-While the Esri tutorials write the code in the ```js <script></script>``` tag of the ```index.html``` file, I wrote the code in a separate ```script.js``` file to practice separation of concerns and keep the code organized.
+While the Esri tutorials write the code in the ```<script></script>``` tag of the ```index.html``` file, I wrote the code in a separate ```script.js``` file to practice separation of concerns and keep the code organized.
 
 # Features
 1. 2D MapView
