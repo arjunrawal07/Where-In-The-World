@@ -4,11 +4,14 @@ This application displays nature trails using Esri's ArcGIS API for JavaScript.
 # Background
 According to their website, [Esri](https://www.esri.com) builds ArcGIS, "the world's most powerful mapping and spacial analytics software." ArcGIS can be used for a variety of purposes including optimizing routes for product delivery, identifying COVID-19 testing sites in neighborhoods, and mapping conflict zones for aid workers to deliver life-saving assistance. 
 
-Esri provides very short, easy-to-follow tutorials to build applications with their ArcGIS tool. I followed these tutorials to get the application up and running
+Esri provides very short, easy-to-follow tutorials to build applications with their ArcGIS tool. I followed these tutorials to get the application up and running. 
 
 # Technologies
 * ArcGIS
 * JavaScript
+
+# Developer's Note:
+While the Esri tutorials write the code in the ```js <script></script>``` tag of the ```index.html``` file, I wrote the code in a separate ```script.js``` file to practice separation of concerns and keep the code organized.
 
 # Features
 1. 2D MapView
