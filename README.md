@@ -1,4 +1,4 @@
-# Where-In-The-World
+# Where-To-Eat-Your-Granola
 This application displays nature trails using Esri's ArcGIS API for JavaScript.
 
 # Background
