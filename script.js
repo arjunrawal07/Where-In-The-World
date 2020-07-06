@@ -30,6 +30,7 @@ require([
   //   view: view,
   //   nextBasemap: "satellite",
   // });
+
   //Adds basemapToggle widget into bottom-right corner
   // view.ui.add(basemapToggle, "bottom-right");
   var basemapGallery = new BasemapGallery({
@@ -37,7 +38,7 @@ require([
     source: {
       portal: {
         url: "https://www.arcgis.com",
-        useVectorBasemaps: false, // loads raster tile basemaps
+        useVectorBasemaps: false, // False loads raster tile basemaps
       },
     },
   });
@@ -90,7 +91,7 @@ require([
           size: "20px",
         },
 
-        //Shows some trail info when clicked
+        //Trail info to be shown when clicked (click event functionality implemented further down)
         popupTemplate: {
           title: "{TRL_NAME}",
           content: "This is a {PARK_NAME} trail located in {CITY_JUR}",
@@ -133,6 +134,7 @@ require([
     queryFeatureLayer(event.mapPoint, 1500, "intersects");
   });
 
+  //Define function to execute client-side query with the same fields as the server-side query.
   function queryFeatureLayerView(
     point,
     distance,
@@ -153,7 +155,7 @@ require([
       returnGeometry: true,
       where: sqlExpression,
     };
-    //When layerview is ready, then call the query features
+    //Now that layerView is added and attributes are present, execute the client-side query.
     view.whenLayerView(featureLayer).then(function (featureLayerView) {
       if (featureLayerView.updating) {
         var handle = featureLayerView.watch("updating", function (isUpdating) {
@@ -173,6 +175,7 @@ require([
       }
     });
   }
+  //Updating the when and on handlers to call the queryFeatureLayerView function with same parameters
   view.when(function () {
     queryFeatureLayerView(view.center, 1500, "intersects");
   });
