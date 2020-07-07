@@ -1,4 +1,4 @@
-# Where-To-Eat-Your-Granola
+# [Where-To-Eat-Your-Granola](https://hikeandeatgranola.netlify.app/)
 This application displays nature trails using [Esri's ArcGIS API](https://developers.arcgis.com) for JavaScript.
 
 Deployed Site: [Where To Eat Your Granola](https://hikeandeatgranola.netlify.app/)
