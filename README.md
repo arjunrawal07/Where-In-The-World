@@ -1,5 +1,5 @@
 # Where-To-Eat-Your-Granola
-This application displays nature trails using Esri's ArcGIS API for JavaScript.
+This application displays nature trails using [Esri's ArcGIS API](https://developers.arcgis.com) for JavaScript.
 
 # Background
 According to their website, [Esri](https://www.esri.com) builds ArcGIS, "the world's most powerful mapping and spacial analytics software." ArcGIS can be used for a variety of purposes including optimizing routes for product delivery, identifying COVID-19 testing sites in neighborhoods, and mapping conflict zones for aid workers to deliver life-saving assistance. 
