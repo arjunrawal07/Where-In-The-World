@@ -8,7 +8,7 @@ require([
   "esri/Graphic",
   "esri/widgets/Locate",
   "esri/widgets/Track",
-  "esri/Graphic"
+  "esri/Graphic",
 ], function (
   Map,
   MapView,
@@ -36,15 +36,32 @@ require([
   //   view: view,
   //   nextBasemap: "satellite",
   // });
-  var locate = new Locate({
+  // var locate = new Locate({
+  //   view: view,
+  //   useHeadingEnabled: false,
+  //   goToOverride: function (view, options) {
+  //     options.target.scale = 1500;
+  //     return view.goTo(options.target);
+  //   },
+  // });
+  // view.ui.add(locate, "top-left");
+  var track = new Track({
     view: view,
-    useHeadingEnabled: false,
-    goToOverride: function (view, options) {
-      options.target.scale = 1500;
-      return view.goTo(options.target);
-    },
+    graphic: new Graphic({
+      symbol: {
+        type: "simple-marker",
+        size: "12px",
+        color: "green",
+        outline: {
+          color: "#efefef",
+          width: "1.5px",
+        },
+      },
+    }),
+    useHeadingEnabled: false, // Don't change orientation of the map
   });
-  view.ui.add(locate, "top-left");
+
+  view.ui.add(track, "top-left");
   //Adds basemapToggle widget into bottom-right corner
   // view.ui.add(basemapToggle, "bottom-right");
   var basemapGallery = new BasemapGallery({
