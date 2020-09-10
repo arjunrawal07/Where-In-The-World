@@ -6,6 +6,7 @@ require([
   "esri/layers/FeatureLayer",
   "esri/layers/GraphicsLayer",
   "esri/Graphic",
+  "esri/widgets/Locate",
 ], function (
   Map,
   MapView,
@@ -13,7 +14,8 @@ require([
   BasemapGallery,
   FeatureLayer,
   GraphicsLayer,
-  Graphic
+  Graphic,
+  Locate
 ) {
   //Map is the container for layers
   var map = new Map({
@@ -23,14 +25,22 @@ require([
   var view = new MapView({
     container: "viewDiv",
     map: map,
-    center: [-118.805, 34.027], //longitude, latitude
-    zoom: 13,
+    center: [-40, 28], //longitude, latitude
+    zoom: 2,
   });
   // var basemapToggle = new BasemapToggle({
   //   view: view,
   //   nextBasemap: "satellite",
   // });
-
+  var locate = new Locate({
+    view: view,
+    useHeadingEnabled: false,
+    goToOverride: function (view, options) {
+      options.target.scale = 1500;
+      return view.goTo(options.target);
+    },
+  });
+  view.ui.add(locate, "top-left");
   //Adds basemapToggle widget into bottom-right corner
   // view.ui.add(basemapToggle, "bottom-right");
   var basemapGallery = new BasemapGallery({
