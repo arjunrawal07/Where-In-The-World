@@ -7,6 +7,8 @@ require([
   "esri/layers/GraphicsLayer",
   "esri/Graphic",
   "esri/widgets/Locate",
+  "esri/widgets/Track",
+  "esri/Graphic"
 ], function (
   Map,
   MapView,
@@ -15,7 +17,9 @@ require([
   FeatureLayer,
   GraphicsLayer,
   Graphic,
-  Locate
+  Locate,
+  Track,
+  Graphic
 ) {
   //Map is the container for layers
   var map = new Map({
