@@ -72,7 +72,7 @@ While the Esri tutorials write the code in the ```<script></script>``` tag of th
  
     I'm an avid hiker, and have become an even more avid hiker during COVID-19, so I was especially drawn to this feature. While I enjoy navigating on a trail without a map (to test my skills), I do find value in knowing a little bit of information prior to starting any trek. This feature specifically includes trailheads, trails, and parks. Esri categorizes these as "feature layers" that developers can access through ArcGIS Online or ArcGIS Enterprise. I used ArcGIS Online, a software-as-a-service (SaaS), "...that can be used to create, share, and manage maps, scenes, layers, apps, and other geographic content."
  
- Note: the ```0``` is used with the ``add``` method so the layers are added to the beginning of the collection and draw in the correct order: polygons, lines, and then points.
+ Note: the ```0``` is used with the ```add``` method so the layers are added to the beginning of the collection and draw in the correct order: polygons, lines, and then points.
  
  ```js 
  //Trailheads feature layer (points)
